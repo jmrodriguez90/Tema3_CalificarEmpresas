@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>index.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>#!/usr/bin/env nodejs
+
+/*
+	CalificaEmpresas. Aplicación de ejemplo para los ejercicios del tema 1 de
+  Cloud Computing del Máster Universitario en Ingeniería Informática.
+	Copyright (C) 2015 Germán Martínez Maldonado
+
+	This file is part of CalificaEmpresas.
+
+	CalificaEmpresas is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	CalificaEmpresas is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+*/</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Dependencias</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> empresa = <span class="hljs-built_in">require</span>(__dirname + <span class="hljs-string">'/../lib/empresa'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Función para procesar el nombre que se va a pasar a la librería</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> procesaNombre = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">cadena</span>) </span>{
+  cadena = cadena.replace(<span class="hljs-string">':'</span>, <span class="hljs-string">''</span>);
+  cadena = cadena.toUpperCase();
+  <span class="hljs-keyword">return</span> cadena;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Pagina de inicio</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>exports.index = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+  res.render(<span class="hljs-string">'index'</span>, {});
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Enlace para crear empresas</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>exports.crearEmpresa = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+  empresa.crearEmpresa({
+    empresa: procesaNombre(req.params.empresa)
+  }, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error, data</span>) </span>{
+    res.render(<span class="hljs-string">'index'</span>, {
+      mensaje: data
+    });
+  });
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Enlace para listas calificaciones</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>exports.listarCalificaciones = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+  <span class="hljs-keyword">var</span> nombreEmpresa = procesaNombre(req.params.empresa);
+
+  empresa.listarCalificaciones({
+    empresa: nombreEmpresa
+  }, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error, data</span>) </span>{
+    res.render(<span class="hljs-string">'index'</span>, {
+      empresa: nombreEmpresa,
+      lista: data
+    });
+  });
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Enlace para crear calificaciones</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>exports.crearCalificacion = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+  empresa.crearCalificacion({
+    empresa: procesaNombre(req.params.empresa),
+    alumno: procesaNombre(req.params.alumno),
+    calificacion: procesaNombre(req.params.calificacion)
+  }, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error, data</span>) </span>{
+    res.render(<span class="hljs-string">'index'</span>, {
+      mensaje: data
+    });
+  });
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Enlace para borrar calificaciones</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>exports.borrarCalificacion = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+  empresa.borrarCalificacion({
+    empresa: procesaNombre(req.params.empresa),
+    alumno: procesaNombre(req.params.alumno)
+  }, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error, data</span>) </span>{
+    res.render(<span class="hljs-string">'index'</span>, {
+      mensaje: data
+    });
+  });
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Enlace para actualizar calificaciones</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>exports.actualizarCalificacion = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+  empresa.actualizarCalificacion({
+    empresa: procesaNombre(req.params.empresa),
+    alumno: procesaNombre(req.params.alumno),
+    calificacion: procesaNombre(req.params.calificacion)
+  }, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error, data</span>) </span>{
+    res.render(<span class="hljs-string">'index'</span>, {
+      mensaje: data
+    });
+  });
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Enlace para generar ranking de empresas</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>exports.generarRanking = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+  empresa.generarRanking(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error, data</span>) </span>{
+    res.render(<span class="hljs-string">'index'</span>, {
+      ranking: data
+    });
+  });
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

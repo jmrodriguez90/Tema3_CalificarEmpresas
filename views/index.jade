@@ -1,0 +1,120 @@
+//
+	CalificaEmpresas. Aplicación de ejemplo para los ejercicios del tema 1 de
+	Cloud Computing del Máster Universitario en Ingeniería Informática.
+	Copyright (C) 2015 Germán Martínez Maldonado
+
+	This file is part of CalificaEmpresas.
+
+	CalificaEmpresas is free software: you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation, either version 2
+	of the License, or any later version.
+
+	CalificaEmpresas is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+doctype html(lang='es')
+head
+	title Calificación de empresas de prácticas
+	script(src='http://code.jquery.com/jquery-1.11.3.min.js')
+	script(type='text/javascript').
+		$(document).ready(function() {
+			$('#crearEmpresa').click(function() {
+				if ($('#empresa').val()){
+					$('#crearEmpresa').attr('href', 'http://califiroku.herokuapp.com/crearEmpresa/:' + $('#empresa').val());
+				} else {
+					alert("No se puede crear una empresa sin introducir su nombre.");
+				}
+			});
+			$('#listarCalificaciones').click(function() {
+				if ($('#empresa').val()){
+					$('#listarCalificaciones').attr('href', 'http://califiroku.herokuapp.com/listarCalificaciones/:' + $('#empresa').val());
+				} else {
+					alert("No se pueden listar las calificaciones de una empresa sin introducir su nombre.");
+				}
+			});
+			$('#crearCalificacion').click(function() {
+				if ($('#empresa').val() && $('#alumno').val() && $('#calificacion').val()){
+					$('#crearCalificacion').attr('href', 'http://califiroku.herokuapp.com/crearCalificacion/:' + $('#empresa').val() + '/:' + $('#alumno').val() + '/:' + $('#calificacion').val());
+				} else {
+					alert("No se puede crear una calificación sin introducir el nombre de la empresa, el nombre del alumno y el valor de la calificación.");
+				}
+			});
+			$('#borrarCalificacion').click(function() {
+				if ($('#empresa').val() && $('#alumno').val()){
+					$('#borrarCalificacion').attr('href', 'http://califiroku.herokuapp.com/borrarCalificacion/:' + $('#empresa').val() + '/:' + $('#alumno').val());
+				} else {
+					alert("No se puede borrar una calificación sin introducir el nombre de la empresa y el nombre del alumno.");
+				}
+			});
+			$('#actualizarCalificacion').click(function() {
+				if ($('#empresa').val() && $('#alumno').val() && $('#calificacion').val()){
+					$('#actualizarCalificacion').attr('href', 'http://califiroku.herokuapp.com/actualizarCalificacion/:' + $('#empresa').val() + '/:' + $('#alumno').val() + '/:' + $('#calificacion').val());
+				} else {
+					alert("No se puede actualizar una calificación sin introducir el nombre de la empresa, el nombre del alumno y el valor de la calificación.");
+				}
+			});
+		});
+
+body
+	| Empresa:&nbsp
+	input#empresa(type='text', name='empresa')
+	br
+	br
+	| Alumno:&nbsp
+	input#alumno(type='text', name='alumno')
+	| &nbspCalificación:&nbsp
+	input#calificacion(type='text', name='calificacion')
+
+	ul
+		li
+			a#crearEmpresa(href='http://califiroku.herokuapp.com/crearEmpresa') Crear empresa
+		li
+			a#listarCalificaciones(href='http://califiroku.herokuapp.com/listarCalificaciones') Listar calificaciones
+		li
+			a#crearCalificacion(href='http://califiroku.herokuapp.com/crearCalificacion') Crear calificación
+		li
+			a#borrarCalificacion(href='http://califiroku.herokuapp.com/borrarCalificacion') Borrar calificación
+		li
+			a#actualizarCalificacion(href='http://califiroku.herokuapp.com/actualizarCalificacion') Actualizar calificación
+		li
+			a#generarRanking(href='http://califiroku.herokuapp.com/generarRanking') Generar ranking
+
+	mensaje!=mensaje
+
+	if(lista)
+		strong Empresa:
+		p=empresa
+
+		table
+			thead
+				tr
+					th Alumno
+					th Calificación
+			tbody
+				each dato in lista
+					tr
+						td=dato.alumno
+						td=dato.calificacion
+
+	if(ranking)
+		strong Ranking de empresas:
+
+		table
+			thead
+				tr
+					th Empresa
+					th Nº calificaciones
+					th Calificación promedia
+			tbody
+				each dato in ranking
+					tr
+						td=dato.empresa
+						td=dato.numCalificaciones
+						td=dato.calificacionProm

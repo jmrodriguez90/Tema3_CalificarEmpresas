@@ -7,5 +7,5 @@
 # Califica Empresas
 Aplicación de ejemplo para los ejercicios de la asignatura Cloud Computing del Máster Universitario en Ingeniería Informática ([https://goo.gl/MPNqPT](https://goo.gl/MPNqPT))
 
-*Código de [Germán Martínez](https://github.com/germaaan), usado por [José M. Rodríguez], (https://github.com/jmrodriguez90) para la realización de los ejercicios de la clase de Cloud Computing del Máster en Ingeniería informática de la UGR*
+*Código de [Germán Martínez](https://github.com/germaaan), usado por [José M. Rodríguez](https://github.com/jmrodriguez90) para la realización de los ejercicios de la clase de Cloud Computing del Máster en Ingeniería informática de la UGR*
 
